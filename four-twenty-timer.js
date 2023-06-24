@@ -10,7 +10,8 @@ let allFourTwentiesOfTheWorldInUTC = morningFourTwentiesOfTheWorldInUTC.concat(a
 const getClosestFourTwenty = () => {
   const nowInUTC = DateTime.now().toUTC();
 
-  const diffBetweenNowAndAllDateTimesInTheWorld = [...new Set(allFourTwentiesOfTheWorldInUTC.map((dt) => dt - nowInUTC))];
+  const uniqueFourTwentiesInTheWorld = [...new Map(allFourTwentiesOfTheWorldInUTC.map(dt => [dt['ts'], dt])).values()];
+  const diffBetweenNowAndAllDateTimesInTheWorld = uniqueFourTwentiesInTheWorld.map((dt) => dt - nowInUTC);
   const dateTimesThatAreInTheFuture = diffBetweenNowAndAllDateTimesInTheWorld.filter((diff) => diff > 0);
 
   const sortedDateTimes = dateTimesThatAreInTheFuture.sort((a, b) => {
