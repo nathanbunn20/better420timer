@@ -1,20 +1,17 @@
 const DateTime = luxon.DateTime;
 const timeZones = Intl.supportedValuesOf('timeZone');
-const timerEl = document.getElementById('timer');
-const initialLoadNowUTC = DateTime.now().toUTC();
+const hoursEl = document.getElementById('hours');
+const initialHoursDisplay = hoursEl.style.display;
+const minutesEl = document.getElementById('minutes');
+const secondsEl = document.getElementById('seconds');
+const oneSecondInMilliseconds = 1000;
+const twentyFourHoursInMilliseconds = 86400000;
 
-// to make this really optimized, I should cache the next 2 days (today & tomorrow in UTC) worth of fourTwenties
-// have an interval that runs daily that loads the next day of fourtwenties sor we always have today & tomorrow cached
-// then everything should run with very low overhead and a small jump in cpu once a day and it will be super unnoticeable
-
-const morningFourTwentiesOfTheWorldInUTC = timeZones.map((timeZone) => DateTime.fromISO(`${initialLoadNowUTC.setZone(timeZone).toFormat('yyyy-MM-dd')}T04:20:00.000`, { zone: timeZone }).toUTC());
-const afternoonFourTwentiesOfTheWorldInUTC = timeZones.map((timeZone) => DateTime.fromISO(`${initialLoadNowUTC.setZone(timeZone).toFormat('yyyy-MM-dd')}T16:20:00.000`, { zone: timeZone }).toUTC());
-let allFourTwentiesOfTheWorldInUTC = morningFourTwentiesOfTheWorldInUTC.concat(afternoonFourTwentiesOfTheWorldInUTC);
+let uniqueFourTwentiesInTheWorld = [];
 
 const getClosestFourTwenty = () => {
   const nowInUTC = DateTime.now().toUTC();
 
-  const uniqueFourTwentiesInTheWorld = [...new Map(allFourTwentiesOfTheWorldInUTC.map(dt => [dt['ts'], dt])).values()];
   const diffBetweenNowAndAllDateTimesInTheWorld = uniqueFourTwentiesInTheWorld.map((dt) => dt - nowInUTC);
   const dateTimesThatAreInTheFuture = diffBetweenNowAndAllDateTimesInTheWorld.filter((diff) => diff > 0);
 
@@ -30,26 +27,60 @@ const getClosestFourTwenty = () => {
 const updateTimer = () => {
   const closestFourTwenty = getClosestFourTwenty();
 
-  timerEl.innerHTML = `${closestFourTwenty.hours} hours<br />${closestFourTwenty.minutes} minutes<br />${Math.round(closestFourTwenty.seconds)} seconds<br />until 4:20`;
+  let hours = closestFourTwenty.hours;
+  let minutes = closestFourTwenty.minutes;
+  let seconds = Math.round(closestFourTwenty.seconds);
+
+  if (seconds === 60) {
+    minutes++;
+    seconds = 0;
+  }
+
+  if (hours === 0) {
+    if (hoursEl.parentElement.classList.contains('timer')) {
+      hoursEl.style.display = 'none';
+    } else {
+      hoursEl.parentElement.style.display = 'none';
+    }
+  } else {
+    hours.style.display = initialHoursDisplay;
+    hours.innerHTML = hours;
+  }
+
+  minutesEl.innerHTML = minutes;
+  secondsEl.innerHTML = seconds;
 };
 
 const updateAllFourTwentiesOfTheWorldInUTC = () => {
-  const nowInUTC = DateTime.now().toUTC(); // may not matter to have toUTC() here - (for optimization)
-
+  const nowInUTC = DateTime.now().toUTC();
   const fourTwenties = [];
 
   timeZones.forEach((timeZone) => {
-    const timeZoneDate = nowInUTC.setZone(timeZone).toFormat('yyyy-MM-dd');
+    const todaysTimeZoneDate = nowInUTC.setZone(timeZone).toFormat('yyyy-MM-dd');
+    const tomorrowsTimeZoneDate = nowInUTC.plus({ days: 1 }).setZone(timeZone).toFormat('yyyy-MM-dd');
 
-    const am = DateTime.fromISO(`${timeZoneDate}T04:20:00.000`, { zone: timeZone }).toUTC();
-    const pm = DateTime.fromISO(`${timeZoneDate}T16:20:00.000`, { zone: timeZone }).toUTC();
+    const todaysMorningFourTwenties = DateTime.fromISO(`${todaysTimeZoneDate}T04:20:00.000`, { zone: timeZone }).toUTC();
+    const todaysAfternoonFourTwenties = DateTime.fromISO(`${todaysTimeZoneDate}T16:20:00.000`, { zone: timeZone }).toUTC();
 
-    fourTwenties.push(am);
-    fourTwenties.push(pm);
+    const tomorrowsMorningFourTwenties = DateTime.fromISO(`${tomorrowsTimeZoneDate}T04:20:00.000`, { zone: timeZone }).toUTC();
+    const tomorrowsAfternoonFourTwenties = DateTime.fromISO(`${tomorrowsTimeZoneDate}T16:20:00.000`, { zone: timeZone }).toUTC();
+
+    fourTwenties.push(todaysMorningFourTwenties);
+    fourTwenties.push(todaysAfternoonFourTwenties);
+    fourTwenties.push(tomorrowsMorningFourTwenties);
+    fourTwenties.push(tomorrowsAfternoonFourTwenties);
   });
   
-  allFourTwentiesOfTheWorldInUTC = fourTwenties;
+  uniqueFourTwentiesInTheWorld = [...new Map(fourTwenties.map(dt => [dt['ts'], dt])).values()];;
 };
 
-setInterval(() => { updateTimer(); }, 1000); // every second
-setInterval(() => { updateAllFourTwentiesOfTheWorldInUTC(); }, 60000); // every minute, I don't think this works since we aren't using a cron schedule. gotta do it every second probably :(
+const init = () => {
+  updateAllFourTwentiesOfTheWorldInUTC();
+
+  updateTimer();
+
+  setInterval(() => { updateTimer(); }, oneSecondInMilliseconds);
+  setInterval(() => { updateAllFourTwentiesOfTheWorldInUTC(); }, twentyFourHoursInMilliseconds);
+};
+
+init();
