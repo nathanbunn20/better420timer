@@ -71,7 +71,7 @@ const updateAllFourTwentiesOfTheWorldInUTC = () => {
     fourTwenties.push(tomorrowsMorningFourTwenties);
     fourTwenties.push(tomorrowsAfternoonFourTwenties);
   });
-  
+
   uniqueFourTwentiesInTheWorld = [...new Map(fourTwenties.map(dt => [dt['ts'], dt])).values()];;
 };
 
