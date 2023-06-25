@@ -1,6 +1,7 @@
 const DateTime = luxon.DateTime;
 const timeZones = Intl.supportedValuesOf('timeZone');
 const timerEl = document.getElementById('timer');
+const itsFourTwentyEl = document.getElementById('its-four-twenty-message');
 const hoursEl = document.getElementById('hours');
 const initialHoursDisplay = hoursEl.style.display;
 const minutesEl = document.getElementById('minutes');
@@ -8,6 +9,8 @@ const secondsEl = document.getElementById('seconds');
 const oneSecondInMilliseconds = 1000;
 const twentyFourHoursInMilliseconds = 86400000;
 
+let isFourTwenty = false;
+let showFourTwentyMessage = false;
 let uniqueFourTwentiesInTheWorld = [];
 
 const getClosestFourTwenty = () => {
@@ -26,30 +29,61 @@ const getClosestFourTwenty = () => {
 };
 
 const updateTimer = () => {
-  const closestFourTwenty = getClosestFourTwenty();
+  if (showFourTwentyMessage) {
+    isFourTwenty = true;
 
-  let hours = closestFourTwenty.hours;
-  let minutes = closestFourTwenty.minutes;
-  const seconds = Math.round(closestFourTwenty.seconds);
+    timerEl.classList.add('hidden');
+    itsFourTwentyEl.classList.remove('hidden');
 
-  if (seconds === 60) {
-    minutes++;
-    seconds = 0;
+    showFourTwentyMessage = false;
   }
 
-  if (hours === 0) {
-    if (hoursEl.parentElement.classList.contains('timer')) {
-      hoursEl.style.display = 'none';
-    } else {
-      hoursEl.parentElement.style.display = 'none';
+  if (!isFourTwenty) {
+    const closestFourTwenty = getClosestFourTwenty();
+
+    let hours = closestFourTwenty.hours;
+    let minutes = closestFourTwenty.minutes;
+    const seconds = Math.round(closestFourTwenty.seconds);
+
+    if (seconds === 60) {
+      minutes++;
+      seconds = 0;
     }
-  } else {
-    hours.style.display = initialHoursDisplay;
-    hours.innerHTML = hours;
-  }
 
-  minutesEl.innerHTML = minutes;
-  secondsEl.innerHTML = seconds;
+    if (hours === 0 && minutes === 0 && seconds === 1) {
+      showFourTwentyMessage = true;
+    }
+
+    if (hours === 0) {
+      if (hoursEl.parentElement.classList.contains('timer')) {
+        hoursEl.style.display = 'none';
+      } else {
+        hoursEl.parentElement.style.display = 'none';
+      }
+    } else {
+      hours.style.display = initialHoursDisplay;
+      hours.innerHTML = hours;
+    }
+
+    minutesEl.innerHTML = minutes;
+    secondsEl.innerHTML = seconds;
+  } else {
+    const itsFourTwentyTimerEl = document.getElementById('four-twenty-timer');
+
+    for (var i = 1; i <= 60; i++) {
+      const seconds = i < 10 ? `0${i}` : `${i}`;
+      setTimeout(() => {
+        itsFourTwentyTimerEl.innerHTML = `00:${seconds}`;
+      }, i * 1000);
+    }
+
+    setTimeout(() => {
+      isFourTwenty = false;
+
+      itsFourTwentyEl.classList.add('hidden');
+      timerEl.classList.remove('hidden');
+    }, 61000);
+  }
 };
 
 const updateAllFourTwentiesOfTheWorldInUTC = () => {
@@ -80,7 +114,7 @@ const init = () => {
 
   updateTimer();
 
-  timerEl.classList.remove('hidden-on-load');
+  timerEl.classList.remove('hidden');
 
   setInterval(() => { updateTimer(); }, oneSecondInMilliseconds);
   setInterval(() => { updateAllFourTwentiesOfTheWorldInUTC(); }, twentyFourHoursInMilliseconds);

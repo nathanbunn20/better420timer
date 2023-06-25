@@ -6,7 +6,7 @@
             background-color: transparent;
         }
 
-        .hidden-on-load {
+        .hidden {
             display: none !important;
         }
 
@@ -20,11 +20,27 @@
         .time-box .label {
             padding: 0 4px;
         }
+
+        .its-four-twenty-timer {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-content: flex-start;
+        }
+
+        .its-four-twenty-timer > div {
+            padding: 0 2px;
+            font-size: 12px;
+        }
+
+        .its-four-twenty-title {
+            font-size: 22px;
+        }
     </style>
 </head>
 
 <body>
-    <div class="timer hidden-on-load" id="timer">
+    <div class="timer hidden" id="timer">
         <div class="time-box">
             <div id="hours"></div>
             <div class="label">Hours</div>
@@ -38,6 +54,15 @@
             <div class="label">Seconds</div>
         </div>
         <div>until 4:20</div>
+    </div>
+
+    <div class="hidden" id="its-four-twenty-message">
+        <div class="its-four-twenty-title">It's 4:20!!</div>
+        <div class="its-four-twenty-timer">
+            <div>T</div>
+            <div> - </div>
+            <div id="four-twenty-timer"></div>
+        </div>
     </div>
     
     <script type="text/javascript" src="./luxon/luxon.min.js"></script>
