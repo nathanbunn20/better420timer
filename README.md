@@ -1,5 +1,5 @@
 # better420timer
-Timer build in html css & pure javascript that lets you know how soon it is until 4:20 somewhere in the world.
+A timer built in html css & pure javascript that lets you know how soon it is until 4:20 somewhere in the world.
 
 Only dependency is the minified [luxon package](https://moment.github.io/luxon/api-docs/index.html)
 
