@@ -6,6 +6,10 @@
             background-color: transparent;
         }
 
+        .hidden-on-load {
+            display: none !important;
+        }
+
         .time-box {
             display: flex;
             flex-direction: row;
@@ -20,7 +24,7 @@
 </head>
 
 <body>
-    <div class="timer" id="timer">
+    <div class="timer hidden-on-load" id="timer">
         <div class="time-box">
             <div id="hours"></div>
             <div class="label">Hours</div>

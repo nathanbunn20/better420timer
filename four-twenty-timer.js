@@ -1,5 +1,6 @@
 const DateTime = luxon.DateTime;
 const timeZones = Intl.supportedValuesOf('timeZone');
+const timerEl = document.getElementById('timer');
 const hoursEl = document.getElementById('hours');
 const initialHoursDisplay = hoursEl.style.display;
 const minutesEl = document.getElementById('minutes');
@@ -78,6 +79,8 @@ const init = () => {
   updateAllFourTwentiesOfTheWorldInUTC();
 
   updateTimer();
+
+  timerEl.classList.remove('hidden-on-load');
 
   setInterval(() => { updateTimer(); }, oneSecondInMilliseconds);
   setInterval(() => { updateAllFourTwentiesOfTheWorldInUTC(); }, twentyFourHoursInMilliseconds);
