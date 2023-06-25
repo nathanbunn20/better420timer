@@ -13,14 +13,14 @@ let uniqueFourTwentiesInTheWorld = [];
 const getClosestFourTwenty = () => {
   const nowInUTC = DateTime.now().toUTC();
 
-  const diffBetweenNowAndAllDateTimesInTheWorld = uniqueFourTwentiesInTheWorld.map((dt) => dt - nowInUTC);
-  const dateTimesThatAreInTheFuture = diffBetweenNowAndAllDateTimesInTheWorld.filter((diff) => diff > 0);
+  const diffBetweenNowAndAllDateTimesInTheWorld = uniqueFourTwentiesInTheWorld.map((ft) => ft - nowInUTC);
+  const dateTimesDiffsThatAreInTheFuture = diffBetweenNowAndAllDateTimesInTheWorld.filter((diff) => diff > 0);
 
-  const sortedDateTimes = dateTimesThatAreInTheFuture.sort((a, b) => {
+  const sortedDateTimeDiffs = dateTimesDiffsThatAreInTheFuture.sort((a, b) => {
     return a > b ? 1 : -1;
   });
 
-  const nextFourTwenty = DateTime.fromMillis(nowInUTC.toJSDate().getTime() + sortedDateTimes[0], { zone: 'UTC' });
+  const nextFourTwenty = DateTime.fromMillis(nowInUTC.toJSDate().getTime() + sortedDateTimeDiffs[0], { zone: 'UTC' });
 
   return nextFourTwenty.diff(nowInUTC, ['hours', 'minutes', 'seconds']).toObject();
 };
@@ -30,7 +30,7 @@ const updateTimer = () => {
 
   let hours = closestFourTwenty.hours;
   let minutes = closestFourTwenty.minutes;
-  let seconds = Math.round(closestFourTwenty.seconds);
+  const seconds = Math.round(closestFourTwenty.seconds);
 
   if (seconds === 60) {
     minutes++;
