@@ -3,6 +3,10 @@ const timeZones = Intl.supportedValuesOf('timeZone');
 const timerEl = document.getElementById('timer');
 const initialLoadNowUTC = DateTime.now().toUTC();
 
+// to make this really optimized, I should cache the next 2 days (today & tomorrow in UTC) worth of fourTwenties
+// have an interval that runs daily that loads the next day of fourtwenties sor we always have today & tomorrow cached
+// then everything should run with very low overhead and a small jump in cpu once a day and it will be super unnoticeable
+
 const morningFourTwentiesOfTheWorldInUTC = timeZones.map((timeZone) => DateTime.fromISO(`${initialLoadNowUTC.setZone(timeZone).toFormat('yyyy-MM-dd')}T04:20:00.000`, { zone: timeZone }).toUTC());
 const afternoonFourTwentiesOfTheWorldInUTC = timeZones.map((timeZone) => DateTime.fromISO(`${initialLoadNowUTC.setZone(timeZone).toFormat('yyyy-MM-dd')}T16:20:00.000`, { zone: timeZone }).toUTC());
 let allFourTwentiesOfTheWorldInUTC = morningFourTwentiesOfTheWorldInUTC.concat(afternoonFourTwentiesOfTheWorldInUTC);
@@ -30,7 +34,7 @@ const updateTimer = () => {
 };
 
 const updateAllFourTwentiesOfTheWorldInUTC = () => {
-  const nowInUTC = DateTime.now().toUTC();
+  const nowInUTC = DateTime.now().toUTC(); // may not matter to have toUTC() here - (for optimization)
 
   const fourTwenties = [];
 
