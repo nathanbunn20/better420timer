@@ -259,7 +259,7 @@ const handleFourTwentyTimer = () => {
 
     let hours = closestFourTwenty.hours;
     let minutes = closestFourTwenty.minutes;
-    const seconds = Math.round(closestFourTwenty.seconds);
+    let seconds = Math.round(closestFourTwenty.seconds);
 
     if (seconds === 60) {
       minutes++;
@@ -303,7 +303,7 @@ const handleSevenTenTimer = () => {
 
     let hours = closestSevenTen.hours;
     let minutes = closestSevenTen.minutes;
-    const seconds = Math.round(closestSevenTen.seconds);
+    let seconds = Math.round(closestSevenTen.seconds);
 
     if (seconds === 60) {
       minutes++;
