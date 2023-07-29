@@ -5,7 +5,9 @@ const sevenTenTimerEl = document.getElementById('710-timer');
 const itsFourTwentyEl = document.getElementById('its-four-twenty-message');
 const itsSevenTenEl = document.getElementById('its-seven-ten-message');
 const fourTwentyHoursEl = document.getElementById('hours');
+const seventTenHoursEl = document.getElementById('seven-ten-hours');
 const initialFourTwentyHoursDisplay = fourTwentyHoursEl.style.display;
+const initialSevenTenHoursDisplay = seventTenHoursEl.style.display;
 const minutesEl = document.getElementById('minutes');
 const secondsEl = document.getElementById('seconds');
 const oneSecondInMilliseconds = 1000;
@@ -60,16 +62,16 @@ const getClosestFourTwenty = () => {
 const getClosestSevenTen = () => {
   const nowInUTC = DateTime.now().toUTC();
 
-  const diffBetweenNowAndAllDateTimesInTheWorld = uniqueFourTwentiesInTheWorld.map((ft) => ft - nowInUTC);
+  const diffBetweenNowAndAllDateTimesInTheWorld = uniqueSevenTensInTheWorld.map((ft) => ft - nowInUTC);
   const dateTimesDiffsThatAreInTheFuture = diffBetweenNowAndAllDateTimesInTheWorld.filter((diff) => diff > 0);
 
   const sortedDateTimeDiffs = dateTimesDiffsThatAreInTheFuture.sort((a, b) => {
     return a > b ? 1 : -1;
   });
 
-  const nextFourTwenty = DateTime.fromMillis(nowInUTC.toJSDate().getTime() + sortedDateTimeDiffs[0], { zone: 'UTC' });
+  const nextSevenTen = DateTime.fromMillis(nowInUTC.toJSDate().getTime() + sortedDateTimeDiffs[0], { zone: 'UTC' });
 
-  return nextFourTwenty.diff(nowInUTC, ['hours', 'minutes', 'seconds']).toObject();
+  return nextSevenTen.diff(nowInUTC, ['hours', 'minutes', 'seconds']).toObject();
 };
 
 const playItsFourTwentyTimer = () => {
@@ -157,85 +159,85 @@ const playItsFourTwentyTimer = () => {
 };
 
 const playItsSevenTenTimer = () => {
-  if (!showingFourTwentyMessage) {
-    const itsFourTwentyTimerEl = document.getElementById('four-twenty-timer');
+  if (!showingSevenTenMessage) {
+    const itsSevenTenTimerEl = document.getElementById('710-timer');
 
-    const updateItsFourTwentyTimer = (itsFourTwentyTimerEl, timeDisplay) => {
-      itsFourTwentyTimerEl.innerHTML = timeDisplay;
+    const updateItsSevenTenTimer = (itsSevenTenTimerEl, timeDisplay) => {
+      itsSevenTenTimerEl.innerHTML = timeDisplay;
     };
 
-    showingFourTwentyMessage = true;
-    itsFourTwentyTimerEl.innerHTML = '00:00';
+    showingSevenTenMessage = true;
+    itsSevenTenTimerEl.innerHTML = '00:00';
 
     Promise
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:01'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:02'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:03'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:04'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:05'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:06'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:07'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:08'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:09'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:10'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:11'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:12'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:13'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:14'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:15'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:16'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:17'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:18'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:19'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:20'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:21'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:22'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:23'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:24'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:25'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:26'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:27'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:28'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:29'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:30'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:31'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:32'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:33'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:34'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:35'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:36'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:37'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:38'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:39'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:40'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:41'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:42'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:43'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:44'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:45'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:46'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:47'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:48'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:49'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:50'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:51'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:52'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:53'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:54'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:55'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:56'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:57'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:58'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '00:59'), 1000)
-      .delay(() => updateItsFourTwentyTimer(itsFourTwentyTimerEl, '01:00'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:01'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:02'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:03'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:04'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:05'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:06'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:07'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:08'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:09'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:10'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:11'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:12'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:13'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:14'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:15'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:16'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:17'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:18'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:19'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:20'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:21'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:22'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:23'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:24'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:25'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:26'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:27'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:28'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:29'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:30'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:31'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:32'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:33'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:34'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:35'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:36'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:37'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:38'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:39'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:40'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:41'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:42'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:43'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:44'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:45'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:46'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:47'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:48'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:49'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:50'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:51'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:52'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:53'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:54'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:55'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:56'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:57'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:58'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '00:59'), 1000)
+      .delay(() => updateItsSevenTenTimer(itsSevenTenTimerEl, '01:00'), 1000)
       .delay(() => {
-        isFourTwenty = false;
+        isSevenTen = false;
 
-        itsFourTwentyEl.classList.add('hidden');
-        fourTwentyTimerEl.classList.remove('hidden');
+        itsSevenTenEl.classList.add('hidden');
+        sevenTenTimerEl.classList.remove('hidden');
       }, 1000)
       .delay(() => {
-        showingFourTwentyMessage = false;
+        showSevenTenMessage = false;
       }, 1000);
   }
 };
@@ -311,13 +313,13 @@ const handleSevenTenTimer = () => {
     }
 
     if (hours === 0) {
-      if (fourTwentyHoursEl.parentElement.classList.contains('710-timer')) {
-        fourTwentyHoursEl.style.display = 'none';
+      if (sevenTenHoursEl.parentElement.classList.contains('710-timer')) {
+        sevenTenHoursEl.style.display = 'none';
       } else {
-        fourTwentyHoursEl.parentElement.style.display = 'none';
+        sevenTenHoursEl.parentElement.style.display = 'none';
       }
     } else {
-      hours.style.display = initialFourTwentyHoursDisplay;
+      hours.style.display = initialSevenTenHoursDisplay;
       hours.innerHTML = hours;
     }
 
@@ -330,7 +332,7 @@ const handleSevenTenTimer = () => {
 
 const updateTimer = () => {
   handleFourTwentyTimer();
-  // handleSevenTenTimer();
+  handleSevenTenTimer();
 };
 
 const updateAllFourTwentiesOfTheWorldInUTC = () => {
@@ -381,7 +383,7 @@ const updateAllSevenTensOfTheWorldInUTC = () => {
 
 const init = () => {
   updateAllFourTwentiesOfTheWorldInUTC();
-  // updateAllSevenTensOfTheWorldInUTC();
+  updateAllSevenTensOfTheWorldInUTC();
 
   updateTimer();
 
@@ -389,7 +391,7 @@ const init = () => {
 
   setInterval(() => { updateTimer(); }, oneSecondInMilliseconds);
   setInterval(() => { updateAllFourTwentiesOfTheWorldInUTC(); }, twentyFourHoursInMilliseconds);
-  // setInterval(() => { updateAllSevenTensOfTheWorldInUTC(); }, twentyFourHoursInMilliseconds);
+  setInterval(() => { updateAllSevenTensOfTheWorldInUTC(); }, twentyFourHoursInMilliseconds);
 };
 
 init();
