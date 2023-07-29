@@ -5,11 +5,13 @@ const sevenTenTimerEl = document.getElementById('710-timer');
 const itsFourTwentyEl = document.getElementById('its-four-twenty-message');
 const itsSevenTenEl = document.getElementById('its-seven-ten-message');
 const fourTwentyHoursEl = document.getElementById('hours');
-const seventTenHoursEl = document.getElementById('seven-ten-hours');
+const sevenTenHoursEl = document.getElementById('seven-ten-hours');
 const initialFourTwentyHoursDisplay = fourTwentyHoursEl.style.display;
-const initialSevenTenHoursDisplay = seventTenHoursEl.style.display;
-const minutesEl = document.getElementById('minutes');
-const secondsEl = document.getElementById('seconds');
+const initialSevenTenHoursDisplay = sevenTenHoursEl.style.display;
+const fourTwentyMinutesEl = document.getElementById('minutes');
+const sevenTenMinutesEl = document.getElementById('seven-ten-minutes');
+const fourTwentySecondsEl = document.getElementById('seconds');
+const sevenTenSecondsEl = document.getElementById('seven-ten-seconds');
 const oneSecondInMilliseconds = 1000;
 const twentyFourHoursInMilliseconds = 86400000;
 
@@ -160,7 +162,7 @@ const playItsFourTwentyTimer = () => {
 
 const playItsSevenTenTimer = () => {
   if (!showingSevenTenMessage) {
-    const itsSevenTenTimerEl = document.getElementById('710-timer');
+    const itsSevenTenTimerEl = document.getElementById('seven-ten-timer');
 
     const updateItsSevenTenTimer = (itsSevenTenTimerEl, timeDisplay) => {
       itsSevenTenTimerEl.innerHTML = timeDisplay;
@@ -279,8 +281,8 @@ const handleFourTwentyTimer = () => {
       hours.innerHTML = hours;
     }
 
-    minutesEl.innerHTML = minutes;
-    secondsEl.innerHTML = seconds;
+    fourTwentyMinutesEl.innerHTML = minutes;
+    fourTwentySecondsEl.innerHTML = seconds;
   } else {
     playItsFourTwentyTimer();
   }
@@ -323,8 +325,8 @@ const handleSevenTenTimer = () => {
       hours.innerHTML = hours;
     }
 
-    minutesEl.innerHTML = minutes;
-    secondsEl.innerHTML = seconds;
+    sevenTenMinutesEl.innerHTML = minutes;
+    sevenTenSecondsEl.innerHTML = seconds;
   } else {
     playItsSevenTenTimer();
   }
@@ -388,6 +390,7 @@ const init = () => {
   updateTimer();
 
   fourTwentyTimerEl.classList.remove('hidden');
+  sevenTenTimerEl.classList.remove('hidden');
 
   setInterval(() => { updateTimer(); }, oneSecondInMilliseconds);
   setInterval(() => { updateAllFourTwentiesOfTheWorldInUTC(); }, twentyFourHoursInMilliseconds);
