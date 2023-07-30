@@ -239,7 +239,7 @@ const playItsSevenTenTimer = () => {
         sevenTenTimerEl.classList.remove('hidden');
       }, 1000)
       .delay(() => {
-        showSevenTenMessage = false;
+        showingSevenTenMessage = false;
       }, 1000);
   }
 };
@@ -293,7 +293,7 @@ const handleSevenTenTimer = () => {
     isSevenTen = true;
 
     sevenTenTimerEl.classList.add('hidden');
-    sevenTenTimerEl.classList.remove('hidden');
+    itsSevenTenEl.classList.remove('hidden');
 
     showSevenTenMessage = false;
   }
